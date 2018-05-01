@@ -30,6 +30,11 @@ window.addEventListener('mousemove',
     mouse.y = event.y;
 });
 
+window.addEventListener('resize',
+  function(event) {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  });
 
 function Circle(x, y, radius, dx, dy) {
   this.x = x;
@@ -87,6 +92,21 @@ for (var i = 0; i < 1000; i++) {
 }
 
 
+var lastCalledTime;
+var fps;
+var maxfps = 0;
+var resetMax = 0;
+
+function showFPS(){
+    c.fillStyle = "White";
+    c.strokeStyle = "Black";
+    c.font      = "normal 22pt Arial";
+
+    c.strokeText(fps + " fps", 10, 26);
+    c.fillText(fps + " fps", 10, 26);
+    c.strokeText(maxfps + " max fps", 10, 60);
+    c.fillText(maxfps + " max fps", 10, 60);
+}
 
 function animate() {
   requestAnimationFrame(animate);
@@ -98,6 +118,22 @@ function animate() {
     circle.update();
   }
 
+  if(!lastCalledTime) {
+    lastCalledTime = performance.now();
+  }
+  var delta = (performance.now() - lastCalledTime)/1000;
+  lastCalledTime = performance.now();
+  fps = Math.round(1/delta);
+  if (fps > maxfps && fps != Infinity) {
+    maxfps = fps;
+  }
+
+  if (resetMax === 120) {
+    maxfps = fps;
+    resetMax = 0;
+  }
+  resetMax += 1;
+  showFPS();
   // console.log('increment');
 
 
