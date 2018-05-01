@@ -29,12 +29,19 @@ c.strokeStyle = 'blue';
 c.stroke();
 
 
-for (var i = 0; i < 30; i++) {
+for (var i = 0; i < 1000; i++) {
   var x = Math.random() * window.innerWidth;
   var y = Math.random() * window.innerHeight;
+  var size = Math.random() * 50 + 10;
 
+  var red = Math.random() * 255;
+  var green = Math.random() * 255;
+  var blue = Math.random() * 255;
+  // var redgreen = Math.random() * 255;
+
+  // console.log("color" + `rgb(${redgreen}, ${redgreen}, ${blue})`);
   c.beginPath(); // To prevent jumping from previous position of context
-  c.arc(x, y, 50, 0, Math.PI * 2, false); // false = not in reverse
-  c.strokeStyle = 'blue';
+  c.arc(x, y, size, 0, Math.PI * 2, false); // false = not in reverse
+  c.strokeStyle = `rgb(${red}, ${green}, ${blue})`;
   c.stroke();
 }
